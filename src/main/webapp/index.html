@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        function init() {
+            var ROOT = 'http://localhost:8080/_ah/api';
+            gapi.client.load('foobar', 'v1', function() {
+              doSomethingAfterLoading();
+            }, ROOT);
+        }
+
+        function doSomethingAfterLoading() {
+            gapi.auth.setToken({
+                access_token: 'this is my custom value'
+            });
+            var r = gapi.client.foobar.foos.post({
+                tenantId : 'ciandt'
+            });
+            r.then(function(resp){
+                console.log(resp);
+            }, function(error){
+                console.error(error);
+            });
+
+            var f1 = gapi.client.foobar.foos.post({tenantId : 'ciandt'}),
+                f2 = gapi.client.foobar.foos.post({tenantId : 'ciandt'}),
+                f3 = gapi.client.foobar.foos.post({tenantId : 'ciandt'});
+
+/*
+            Promise.all([f1, f2, f3]).then(function(t){
+                console.log(t);
+            });
+  */
+            var batch = gapi.client.newBatch();
+            batch.add(f1);
+            batch.add(f2);
+            batch.add(f3);
+
+            batch.then(function(resp){
+                console.log(resp);
+            }, function(error){
+                console.error(error);
+            });
+
+
+        }
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=init"></script>
+</head>
+<body>
+
+</body>
+</html>

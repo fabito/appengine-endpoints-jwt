@@ -3,6 +3,7 @@ package com.github.fabito.gaeskeletons.infrastructure.web;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+import com.google.common.base.Stopwatch;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -14,17 +15,16 @@ public class TracingInterceptor implements MethodInterceptor {
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 
-		long start = System.nanoTime();
-
+		Stopwatch stopwatch = Stopwatch.createStarted();
 		try {
 			return invocation.proceed();
 		} finally {
 			LOGGER.info(String
-					.format("Invocation of method %s.%s() with parameters %s took %.1f ms.",
+					.format("Invocation of method %s.%s() with parameters %s took %s.",
 							invocation.getClass().getName(),
 							invocation.getMethod().getName(),
 							Arrays.toString(invocation.getArguments()),
-							(System.nanoTime() - start) / 1000000.0));
+							stopwatch.stop()));
 		}
 	}
 

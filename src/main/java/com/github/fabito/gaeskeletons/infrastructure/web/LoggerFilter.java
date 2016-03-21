@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Enumeration;
 import java.util.logging.Logger;
 
 import javax.servlet.Filter;
@@ -36,6 +37,28 @@ public class LoggerFilter implements Filter {
 		String body = CharStreams.toString(wrappedRequest.getReader());
 		LOGGER.info(wrappedRequest.getRequestURI());
 		LOGGER.info(body);
+
+
+		Enumeration enAttr = wrappedRequest.getAttributeNames();
+		while(enAttr.hasMoreElements()){
+			String attributeName = (String)enAttr.nextElement();
+			LOGGER.info("Attribute Name - " + attributeName + ", Value - " + (wrappedRequest.getAttribute(attributeName)).toString());
+		}
+
+		LOGGER.info("To out-put All the request parameters received from request - ");
+
+		Enumeration enParams = wrappedRequest.getParameterNames();
+		while(enParams.hasMoreElements()){
+			String paramName = (String)enParams.nextElement();
+			LOGGER.info("Attribute Name - " + paramName + ", Value - " + wrappedRequest.getParameter(paramName));
+		}
+
+		Enumeration hParams = wrappedRequest.getHeaderNames();
+		while(hParams.hasMoreElements()){
+			String hName = (String)hParams.nextElement();
+			LOGGER.info("Header Name - " + hName + ", Value - " + wrappedRequest.getHeader(hName));
+		}
+
 		wrappedRequest.resetInputStream();
 		chain.doFilter(wrappedRequest, response);
 	}
