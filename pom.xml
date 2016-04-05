@@ -6,16 +6,14 @@
     <groupId>com.github.fabito</groupId>
     <version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Google Cloud Endpoints + Guice + JWT</name>
+	<name>Google Cloud Endpoints + Dagger 2 + JWT + Objectify</name>
 
 	<properties>
-		<appengine.target.version>1.9.30</appengine.target.version>
+		<appengine.target.version>1.9.34</appengine.target.version>
 		<build.output.dir>${project.build.directory}/classes</build.output.dir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<guice-version>4.0</guice-version>
 	</properties>
-
 
 	<build>
 		<outputDirectory>${build.output.dir}</outputDirectory>
@@ -102,7 +100,7 @@
 		<dependency>
 			<groupId>com.googlecode.objectify</groupId>
 			<artifactId>objectify</artifactId>
-            <version>5.1.9</version>
+            <version>5.1.12</version>
             <exclusions>
 				<exclusion>
 					<groupId>com.google.appengine</groupId>
@@ -116,21 +114,16 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.google.inject.extensions</groupId>
-			<artifactId>guice-servlet</artifactId>
-            <version>${guice-version}</version>
-        </dependency>
-		<dependency>
-			<groupId>com.google.inject</groupId>
-			<artifactId>guice</artifactId>
-            <version>${guice-version}</version>
+			<groupId>com.google.dagger</groupId>
+			<artifactId>dagger</artifactId>
+			<version>2.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.inject.extensions</groupId>
-			<artifactId>guice-multibindings</artifactId>
-            <version>${guice-version}</version>
+			<groupId>com.google.dagger</groupId>
+			<artifactId>dagger-compiler</artifactId>
+			<version>2.2</version>
+			<optional>true</optional>
 		</dependency>
-
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>

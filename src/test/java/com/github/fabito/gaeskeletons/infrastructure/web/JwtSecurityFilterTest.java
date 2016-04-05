@@ -7,13 +7,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by fabio on 20/03/16.
- */
 public class JwtSecurityFilterTest {
 
     @Test
-    public void t() throws JoseException {
+    public void rsaJwkGenerator() throws JoseException {
         RsaJsonWebKey rsaJsonWebKey = RsaJwkGenerator.generateJwk(2048);
         rsaJsonWebKey.setKeyId("123");
         System.out.print(rsaJsonWebKey.toJson());

@@ -4,18 +4,39 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	<listener>
-		<listener-class>com.github.fabito.gaeskeletons.infrastructure.web.GuiceServletConfig</listener-class>
+		<listener-class>com.github.fabito.gaeskeletons.infrastructure.web.FooDaggerServletContextListener</listener-class>
 	</listener>
 
-	<!-- set up Google Guice Servlet integration -->
 	<filter>
-		<filter-name>guiceFilter</filter-name>
-		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+		<filter-name>TenantFilter</filter-name>
+		<filter-class>com.github.fabito.gaeskeletons.infrastructure.web.TenantFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>guiceFilter</filter-name>
+		<filter-name>TenantFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+	<filter>
+		<filter-name>ObjectifyFilter</filter-name>
+		<filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ObjectifyFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<servlet-class>com.github.fabito.gaeskeletons.infrastructure.web.FooDaggerSystemServiceServlet</servlet-class>
+		<init-param>
+			<param-name>services</param-name>
+			<param-value>com.github.fabito.gaeskeletons.api.FooApiV1,com.github.fabito.gaeskeletons.api.BarApiV1</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<url-pattern>/_ah/spi/*</url-pattern>
+	</servlet-mapping>
 
 
 </web-app>
