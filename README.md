@@ -1,7 +1,9 @@
 # appengine-endpoints-jwt
 
+(still a WIP)
+
 A skeleton application for Google Cloud Endpoints in Java.
-It exposes a token based authentication API using a custom JWT and uses Dagger 2 for DI.
+It leverages a custom Authenticator which is token based (JWT) and uses Dagger 2 for DI.
 
 * Google Cloud Endpoints
 * Dagger 2 for dependency injection
@@ -18,15 +20,13 @@ and put as an attribute in the ServletContext for further utilization.
 ### Injecting dependencies into @Apis
 
 Api endpoints instantiation is still performed by the SystemServiceServlet via reflection.
-After new instances are created the injector is retrieved from the ServletContext
+After new instances are created the injector is retrieved from the ServletContext and used to inject the required dependencies.
 
 ## Custom JWT Authenticator
 
-The JwtAuthenticator is a [Authenticator | http://t.com] implementation which retrieves the JWT token
+The JwtAuthenticator is an Authenticator implementation which retrieves the JWT token
 from the Authorization header, performs claims validation and signature verification.
 It also creates a User object which will be injected in the Api methods
-
-
 
 
 
